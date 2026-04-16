@@ -1,0 +1,11 @@
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-dotenv==1.0.1
+groq==0.11.0
+google-generativeai==0.7.2
+Pillow>=10.4.0
+python-multipart==0.0.9
+requests==2.31.0
+beautifulsoup4==4.12.3
+SQLAlchemy==2.0.29
+slowapi==0.1.9

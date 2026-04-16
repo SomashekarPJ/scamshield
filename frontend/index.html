@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScamShield AI — Intelligent Fraud Defense</title>
+  <meta name="description"
+    content="ScamShield AI uses advanced Gemini AI to detect scams, phishing links, and fraudulent messages in real-time. Protect yourself from UPI fraud, fake banking alerts, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- Animated BG Orbs -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M14 2L3 7V14C3 19.5 7.8 24.7 14 26C20.2 24.7 25 19.5 25 14V7L14 2Z" fill="url(#shieldGrad)"
+              stroke="rgba(255,255,255,0.2)" stroke-width="0.5" />
+            <path d="M10 14L13 17L19 11" stroke="white" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <defs>
+              <linearGradient id="shieldGrad" x1="3" y1="2" x2="25" y2="26" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#8b5cf6" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">ScamShield <span class="logo-ai">AI</span></span>
+      </div>
+      <div class="header-badge" id="statusBadge">
+        <span class="badge-dot" id="badgeDot"></span>
+        <span id="badgeText">Connecting…</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero container">
+    <div class="hero-tag">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <circle cx="7" cy="7" r="7" fill="#6366f1" />
+        <path d="M4 7l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      Powered by Groq & Gemini Dual-AI
+    </div>
+    <h1 class="hero-title">
+      Detect Scams<br />
+      <span class="gradient-text">Instantly & Accurately</span>
+    </h1>
+    <p class="hero-subtitle">
+      Analyze suspicious messages, URLs, and screenshots with military-grade AI.
+      Specialized for Indian digital fraud: UPI scams, phishing, fake banking alerts.
+    </p>
+  </section>
+
+  <!-- ===== MAIN ANALYZER ===== -->
+  <main class="container" id="analyzer">
+
+    <!-- Tab Switcher -->
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tab-text" role="tab" aria-selected="true" aria-controls="panel-text"
+        onclick="switchTab('text')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="2" y="3" width="12" height="2" rx="1" fill="currentColor" />
+          <rect x="2" y="7" width="9" height="2" rx="1" fill="currentColor" />
+          <rect x="2" y="11" width="11" height="2" rx="1" fill="currentColor" />
+        </svg>
+        Message / Text
+      </button>
+      <button class="tab" id="tab-url" role="tab" aria-selected="false" aria-controls="panel-url"
+        onclick="switchTab('url')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M6.5 9.5a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5L7 4" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" />
+          <path d="M9.5 6.5a3.5 3.5 0 00-5 0l-2 2a3.5 3.5 0 005 5L9 12" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" />
+        </svg>
+        URL / Link
+      </button>
+      <button class="tab" id="tab-image" role="tab" aria-selected="false" aria-controls="panel-image"
+        onclick="switchTab('image')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5" />
+          <circle cx="5.5" cy="5.5" r="1.5" fill="currentColor" />
+          <path d="M2 10.5l3.5-3.5L8 9.5l2.5-2.5L14 10.5" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Screenshot
+      </button>
+      <button class="tab" id="tab-voice" role="tab" aria-selected="false" aria-controls="panel-voice"
+        onclick="switchTab('voice')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 3a3 3 0 00-3 3v4a3 3 0 006 0V6a3 3 0 00-3-3z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M8 13v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Call Defender
+      </button>
+    </div>
+
+    <!-- Text Panel -->
+    <div class="panel glass active" id="panel-text" role="tabpanel">
+      <label class="panel-label" for="textInput">Paste the suspicious message below</label>
+      <textarea id="textInput" class="text-input"
+        placeholder="e.g. Dear customer, your SBI account will be blocked. Click here to update KYC immediately: bit.ly/sbi-kyc..."
+        rows="6" maxlength="5000"></textarea>
+      <div class="input-footer">
+        <span class="char-count" id="charCount">0 / 5000</span>
+        <button class="btn-analyze" id="analyzeTextBtn" onclick="analyzeText()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          Analyze for Scams
+        </button>
+      </div>
+    </div>
+
+    <!-- URL Panel -->
+    <div class="panel glass hidden" id="panel-url" role="tabpanel">
+      <label class="panel-label" for="urlInput">Enter the suspicious URL or link</label>
+      <div class="url-input-wrap">
+        <svg class="url-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M7.5 10.5a4 4 0 005.56 0l2.5-2.5a4 4 0 00-5.66-5.66L8.5 3.75" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" />
+          <path d="M10.5 7.5a4 4 0 00-5.56 0l-2.5 2.5a4 4 0 005.66 5.66L9.5 14.25" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+        <input type="url" id="urlInput" class="url-input"
+          placeholder="https://suspicious-link.com/offer?claim=prize&id=12345" />
+      </div>
+      <div class="input-footer">
+        <span class="url-hint">Paste any link — shortened URLs, phishing pages, fake banking portals</span>
+        <button class="btn-analyze" id="analyzeUrlBtn" onclick="analyzeUrl()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          Scan Link
+        </button>
+      </div>
+    </div>
+
+    <!-- Image Panel -->
+    <div class="panel glass hidden" id="panel-image" role="tabpanel">
+      <label class="panel-label">Upload a screenshot of the suspicious message</label>
+      <div class="drop-zone" id="dropZone" onclick="document.getElementById('imageInput').click()"
+        ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div class="drop-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="4" width="32" height="32" rx="8" stroke="url(#dropGrad)" stroke-width="1.5"
+              stroke-dasharray="4 3" />
+            <path d="M20 26V14M14 20l6-6 6 6" stroke="url(#dropGrad2)" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <defs>
+              <linearGradient id="dropGrad" x1="4" y1="4" x2="36" y2="36">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#8b5cf6" />
+              </linearGradient>
+              <linearGradient id="dropGrad2" x1="14" y1="14" x2="26" y2="26">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#8b5cf6" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <p class="drop-title">Drag & drop or click to upload</p>
+        <p class="drop-sub">PNG, JPG, JPEG, WEBP — max 10MB</p>
+        <div class="drop-preview hidden" id="dropPreview">
+          <img id="previewImg" alt="Preview" />
+          <span id="previewName"></span>
+        </div>
+      </div>
+      <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="onFileSelect(event)" />
+      <div class="input-footer">
+        <span class="url-hint">AI reads all text in the screenshot automatically</span>
+        <button class="btn-analyze" id="analyzeImageBtn" onclick="analyzeImage()" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          Scan Screenshot
+        </button>
+      </div>
+    </div>
+
+    <!-- Voice / Call Defender Panel -->
+    <div class="panel glass hidden" id="panel-voice" role="tabpanel">
+      <div class="call-defender-wrap">
+        <div class="call-ui-hologram">
+          <div class="caller-circle">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring delay-1"></div>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </div>
+          <div class="caller-details">
+            <h3 class="caller-id">Unknown Caller</h3>
+            <p class="call-status" id="callStatus">Awaiting incoming data...</p>
+          </div>
+        </div>
+
+        <div class="transcript-scroller glass" id="transcriptBox">
+          <p class="transcript-placeholder">Start recording or run a demo call to see a live transcript...</p>
+        </div>
+
+        <div class="call-controls">
+          <button class="btn-call-demo" onclick="runCallDemo()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Simulate Scam Call
+          </button>
+          <button class="btn-record" id="recordBtn" onclick="toggleRecording()">
+            <div class="record-dot"></div>
+            Start Real-Time Scan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-card glass hidden" id="loadingCard">
+      <div class="loader-ring"></div>
+      <div class="loading-text">
+        <p class="loading-title" id="loadingTitle">Analyzing with Dual-AI Layer…</p>
+        <p class="loading-sub" id="loadingSubtitle">Reading content and detecting fraud patterns</p>
+      </div>
+    </div>
+
+    <!-- Result Card -->
+    <div class="result-card glass hidden" id="resultCard">
+
+      <!-- Risk Meter -->
+      <div class="risk-header" id="riskHeader">
+        <div class="risk-score-wrap">
+          <svg class="risk-ring" viewBox="0 0 120 120" width="120" height="120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10" />
+            <circle cx="60" cy="60" r="50" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="314"
+              stroke-dashoffset="314" id="riskArc" transform="rotate(-90 60 60)" />
+          </svg>
+          <div class="risk-score-center">
+            <span class="risk-number" id="riskNumber">0</span>
+            <span class="risk-label-small">/100</span>
+          </div>
+        </div>
+        <div class="risk-info">
+          <div class="risk-badge" id="riskBadge">SAFE</div>
+          <h2 class="risk-verdict" id="riskVerdict">—</h2>
+          <p class="risk-explanation" id="riskExplanation">—</p>
+        </div>
+      </div>
+
+      <!-- Details Grid -->
+      <div class="details-grid">
+
+        <!-- Red Flags -->
+        <div class="detail-box" id="redFlagsBox">
+          <div class="detail-header">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2l1.5 4.5H14l-3.75 2.75 1.5 4.5L8 11l-3.75 2.75 1.5-4.5L2 6.5h4.5z" fill="#ef4444" />
+            </svg>
+            Red Flags Detected
+          </div>
+          <ul class="flag-list" id="redFlagsList"></ul>
+        </div>
+
+        <!-- Flagged Keywords -->
+        <div class="detail-box" id="keywordsBox">
+          <div class="detail-header">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="7" width="12" height="7" rx="1.5" stroke="#f59e0b" stroke-width="1.5" />
+              <path d="M5 7V5.5a3 3 0 016 0V7" stroke="#f59e0b" stroke-width="1.5" />
+            </svg>
+            Flagged Keywords
+          </div>
+          <div class="keyword-chips" id="keywordChips"></div>
+        </div>
+
+        <!-- Extracted Text (for images) -->
+        <div class="detail-box full-width hidden" id="extractedTextBox">
+          <div class="detail-header">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="3" width="12" height="2" rx="1" fill="#6366f1" />
+              <rect x="2" y="7" width="9" height="2" rx="1" fill="#6366f1" />
+              <rect x="2" y="11" width="11" height="2" rx="1" fill="#6366f1" />
+            </svg>
+            Text Extracted from Screenshot
+          </div>
+          <p class="extracted-text" id="extractedText"></p>
+        </div>
+
+      </div>
+
+      <!-- Action Footer -->
+      <div class="result-footer">
+        <button class="btn-secondary" onclick="resetAnalyzer()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7a5 5 0 1010 0 5 5 0 00-10 0z" stroke="currentColor" stroke-width="1.5" />
+            <path d="M7 4v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          Analyze Another
+        </button>
+        <button class="btn-copy" onclick="copyReport()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="4" y="4" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+            <path d="M2 10V3a1 1 0 011-1h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          Copy Report
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Error Card -->
+    <div class="error-card glass hidden" id="errorCard">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="14" stroke="#ef4444" stroke-width="1.5" />
+        <path d="M16 9v8M16 21v2" stroke="#ef4444" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <p class="error-title">Analysis Failed</p>
+      <p class="error-msg" id="errorMsg">Something went wrong.</p>
+      <button class="btn-secondary" onclick="resetAnalyzer()">Try Again</button>
+    </div>
+
+  </main>
+
+  <!-- ===== RECENT THREATS ===== -->
+  <section class="recent-threats container" id="recentThreatsSection" style="padding-top: 20px;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+      <h2 class="section-title" style="margin-bottom: 0;">Live Threat Feed</h2>
+      <span class="badge-dot online" style="box-shadow: 0 0 8px var(--critical); background: var(--critical); animation: pulse-dot 2s infinite;"></span>
+    </div>
+    <div class="examples-grid" id="recentScansGrid">
+      <p class="transcript-placeholder" style="grid-column: 1/-1; margin-top: 20px;">No high-risk threats detected yet. Stay safe!</p>
+    </div>
+  </section>
+
+  <!-- ===== EXAMPLES ===== -->
+  <section class="examples-section container">
+    <h2 class="section-title">Try a sample scam</h2>
+    <div class="examples-grid">
+      <button class="example-card" onclick="loadExample('text', example1)" id="ex1">
+        <div class="ex-tag ex-tag-critical">CRITICAL</div>
+        <p class="ex-text">"Your SBI account will be suspended. Update KYC now or lose access. Click: bit.ly/sbi-kyc99"
+        </p>
+        <span class="ex-type">Fake Banking Alert</span>
+      </button>
+      <button class="example-card" onclick="loadExample('url', 'http://hdfc-bank-kyc-update.online/login?ref=urgent')"
+        id="ex2">
+        <div class="ex-tag ex-tag-high">HIGH RISK</div>
+        <p class="ex-text">http://hdfc-bank-kyc-update.online/login?ref=urgent</p>
+        <span class="ex-type">Phishing URL</span>
+      </button>
+      <button class="example-card" onclick="loadExample('text', example3)" id="ex3">
+        <div class="ex-tag ex-tag-medium">MEDIUM</div>
+        <p class="ex-text">"Congratulations! You've won ₹50,000 in Jio Lucky Draw. Send OTP to claim prize within
+          24hrs."</p>
+        <span class="ex-type">Lottery Scam</span>
+      </button>
+      <button class="example-card" onclick="loadExample('text', example4)" id="ex4">
+        <div class="ex-tag ex-tag-safe">SAFE</div>
+        <p class="ex-text">"Your order #OD987654321 has been shipped. Expected delivery: Friday. Track on the app."</p>
+        <span class="ex-type">Legitimate Message</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer container">
+    <p>ScamShield AI &copy; 2026 — Built for Nexora Hackathon &middot; Powered by Groq & Gemini AI</p>
+    <p class="footer-sub">Protecting India from digital fraud, one scan at a time 🛡️</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
