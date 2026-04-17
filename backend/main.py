@@ -5,9 +5,9 @@ from fastapi.responses import FileResponse
 import os
 import base64
 
-from models import AnalyzeRequest, AnalyzeResponse
-from analyzer import analyze_text, analyze_url, analyze_image, analyze_voice, GROQ_AVAILABLE, GEMINI_AVAILABLE
-from database import get_db, ScanLog
+from .models import AnalyzeRequest, AnalyzeResponse
+from .analyzer import analyze_text, analyze_url, analyze_image, analyze_voice, GROQ_AVAILABLE, GEMINI_AVAILABLE
+from .database import get_db, ScanLog
 from sqlalchemy.orm import Session
 
 from slowapi import Limiter, _rate_limit_exceeded_handler
