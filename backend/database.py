@@ -3,7 +3,8 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
 import os
 
-DATABASE_URL = "sqlite:///./scamshield.db"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATABASE_URL = f"sqlite:///{os.path.join(BASE_DIR, 'scamshield.db')}"
 
 engine = create_engine(
     DATABASE_URL, connect_args={"check_same_thread": False}
